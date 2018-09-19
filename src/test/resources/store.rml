@@ -1,0 +1,150 @@
+@prefix rr:   <http://www.w3.org/ns/r2rml#>.
+@prefix rml:  <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql:   <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://xwww.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+@prefix data: <http://example.org/> .
+
+<http://rml.ks.net/crowdstrike> rdf:type owl:RMLFile ;
+  owl:versionInfo "0.1.0"^^xsd:string .
+
+<#LogicalSourceRoot>
+  rml:source "store.json";
+  rml:referenceFormulation ql:JSONPath;
+  rml:iterator "$" .
+
+<#LogicalSourceDataTypes>
+    rml:source "store.json";
+    rml:referenceFormulation ql:JSONPath;
+    rml:iterator "$.dataTypes" .
+
+<#LogicalSourceBooks>
+  rml:source "store.json";
+  rml:referenceFormulation ql:JSONPath;
+  rml:iterator "$.inventory.books.[*]" .
+
+
+<#Store>
+  rml:logicalSource <#LogicalSourceRoot>;
+  rr:subjectMap [
+    rr:template "http://data.example.com/{identifier}" ;
+    rr:class schema:Business, schema:Organization
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:name;
+    rr:objectMap [
+       rml:reference "name" ;
+       rr:datatype xsd:string
+    ];
+  ];
+    rr:predicateObjectMap [
+      rr:predicate schema:location;
+      rr:objectMap [
+         rr:constant data:China
+      ];
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate schema:sells;
+      rr:objectMap [
+          rr:parentTriplesMap <#Book> ;
+      ];
+   ].
+
+<#DataTypes>
+    rml:logicalSource <#LogicalSourceDataTypes>;
+      rr:subjectMap [
+        rr:template "http://data.example.com/dataTypes" ;
+        rr:class schema:DataTypes
+      ];
+    rr:predicateObjectMap [
+            rr:predicate schema:noDataType;
+            rr:objectMap [
+               rml:reference "integer" ;
+            ];
+          ];
+    rr:predicateObjectMap [
+            rr:predicate schema:integer;
+            rr:objectMap [
+               rml:reference "integer" ;
+               rr:datatype xsd:integer
+            ];
+          ];
+    rr:predicateObjectMap [
+            rr:predicate schema:float;
+            rr:objectMap [
+               rml:reference "float" ;
+               rr:datatype xsd:float
+            ];
+          ];
+    rr:predicateObjectMap [
+                rr:predicate schema:double;
+                rr:objectMap [
+                   rml:reference "double" ;
+                   rr:datatype xsd:double
+                ];
+              ];
+    rr:predicateObjectMap [
+            rr:predicate schema:bolean;
+            rr:objectMap [
+               rml:reference "boolean" ;
+               rr:datatype xsd:boolean
+            ];
+          ].
+
+<#BookChapter>
+  rml:logicalSource [
+      rml:source "store.json";
+      rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$.inventory.books.[*].chapters.[*]"
+    ];
+  rr:subjectMap [
+    rr:template "http://data.example.com/{title}{author}" ;
+    rr:class schema:Book
+  ];
+  rr:predicateObjectMap [
+      rr:predicate schema:number;
+      rr:objectMap [
+         rml:reference "number" ;
+         rr:datatype xsd:int
+      ];
+    ]
+  rr:predicateObjectMap [
+    rr:predicate schema:title;
+    rr:objectMap [
+       rml:reference "title" ;
+       rr:datatype xsd:string
+    ];
+  ];
+
+
+<#Book>
+  rml:logicalSource <#LogicalSourceBooks>;
+  rr:subjectMap [
+    rr:template "http://data.example.com/{title}{author}" ;
+    rr:class schema:Book
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:title;
+    rr:objectMap [
+       rml:reference "title" ;
+       rr:datatype xsd:string
+    ];
+  ];
+  rr:predicateObjectMap [
+      rr:predicate schema:chapter;
+      rr:objectMap [
+         rr:parentTriplesMap <#BookChapter> ;
+         rdf:datatype rdf:List
+      ];
+    ];
+  rr:predicateObjectMap [
+      rr:predicate schema:status;
+      rr:objectMap [
+         rr:constant "soldOut" ;
+         rr:datatype xsd:string
+      ];
+    ].
