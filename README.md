@@ -1,5 +1,8 @@
-# RML-Mapper for JSON streams
+# JSON to RDF
 
+WORK-IN-PROGRESS
+
+This library transforms JSON data to RDF using a [RM](http://rml.io)L mapping file. 
 
 1. Loads in memory the rml model
 2. Generates the subjects with defined URI templates
@@ -61,6 +64,7 @@ Ideas for templating
 //    Object result = engine.eval("4*5");
 
 ## TODO
+
 
 * Add RML.joinCondition support
 * RDF.List as Data Type

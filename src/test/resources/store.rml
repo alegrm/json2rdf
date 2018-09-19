@@ -95,30 +95,30 @@
             ];
           ].
 
-<#BookChapter>
-  rml:logicalSource [
-      rml:source "store.json";
-      rml:referenceFormulation ql:JSONPath;
-      rml:iterator "$.inventory.books.[*].chapters.[*]"
-    ];
-  rr:subjectMap [
-    rr:template "http://data.example.com/{title}{author}" ;
-    rr:class schema:Book
-  ];
-  rr:predicateObjectMap [
-      rr:predicate schema:number;
-      rr:objectMap [
-         rml:reference "number" ;
-         rr:datatype xsd:int
-      ];
-    ]
-  rr:predicateObjectMap [
-    rr:predicate schema:title;
-    rr:objectMap [
-       rml:reference "title" ;
-       rr:datatype xsd:string
-    ];
-  ];
+# <#BookChapter>
+#   rml:logicalSource [
+#       rml:source "store.json";
+#       rml:referenceFormulation ql:JSONPath;
+#       rml:iterator "$.inventory.books.[*].chapters.[*]"
+#     ];
+#   rr:subjectMap [
+#     rr:template "http://data.example.com/{title}{author}" ;
+#     rr:class schema:Book
+#   ];
+#   rr:predicateObjectMap [
+#       rr:predicate schema:number;
+#       rr:objectMap [
+#          rml:reference "number" ;
+#          rr:datatype xsd:int
+#       ];
+#     ]
+#   rr:predicateObjectMap [
+#     rr:predicate schema:title;
+#     rr:objectMap [
+#        rml:reference "title" ;
+#        rr:datatype xsd:string
+#     ];
+#   ];
 
 
 <#Book>
@@ -134,13 +134,13 @@
        rr:datatype xsd:string
     ];
   ];
-  rr:predicateObjectMap [
-      rr:predicate schema:chapter;
-      rr:objectMap [
-         rr:parentTriplesMap <#BookChapter> ;
-         rdf:datatype rdf:List
-      ];
-    ];
+#  rr:predicateObjectMap [
+#      rr:predicate schema:chapter;
+#      rr:objectMap [
+#         rr:parentTriplesMap <#BookChapter> ;
+#         rdf:datatype rdf:List
+#      ];
+#    ];
   rr:predicateObjectMap [
       rr:predicate schema:status;
       rr:objectMap [
