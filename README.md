@@ -14,6 +14,18 @@ This library transforms JSON data to RDF using a [RML](http://rml.io) mapping fi
 
 This application implements the [RML](http://rml.io) specification. To learn how to create RML flies please go to the Specs section.
 
+A fat jar is packaged to be used as a java executable:
+
+        $ java -jar json2rdf-0.1.0-jar-with-dependencies.jar
+        Usage: <main class> [options]
+          Options:
+            --help, -h
+        
+          * --inputFile, -f
+              JSON file to convert
+          * --rml, -m
+              RML mapping file
+
 
 
 ## TODO
@@ -25,9 +37,8 @@ This application implements the [RML](http://rml.io) specification. To learn how
 * Add generated sources to target directory
 * Add the project to maven central
     
-# Future work
-## Using scripting templates
-
+### Future work
+#### Using scripting templates
 
 Creating a new uuid
 

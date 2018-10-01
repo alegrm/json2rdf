@@ -2,14 +2,10 @@ package org.alereno.json2rdf;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.util.FileUtils;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -26,11 +22,13 @@ import static org.apache.jena.util.FileManager.get;
 @Slf4j
 public class Json2Rdf {
 
-    @Parameter(names = {"--rml", "-m"})
-    String mappingFile;
-    @Parameter(names = {"--inputFile", "-f"})
-    String inputFile;
+    @Parameter(names = {"--rml", "-m"}, required = true, description = "RML mapping file")
+    private String mappingFile;
+    @Parameter(names = {"--inputFile", "-f"}, required = true, description = "JSON file to convert")
+    private String inputFile;
 
+    @Parameter(names ={"--help", "-h"}, help = true)
+    private boolean help;
 
     public void run() {
         log.info("mapping {}, file {}", mappingFile, inputFile);
@@ -59,10 +57,17 @@ public class Json2Rdf {
 
     public static void main(String[] args) {
         Json2Rdf json2Rdf = new Json2Rdf();
-        JCommander.newBuilder()
+
+        JCommander jc = JCommander.newBuilder()
                 .addObject(json2Rdf)
-                .build()
-                .parse(args);
-        json2Rdf.run();
+                .build();
+        try {
+            jc.parse(args);
+            json2Rdf.run();
+
+        } catch (ParameterException pe) {
+            jc.usage();
+        }
+
     }
 }
