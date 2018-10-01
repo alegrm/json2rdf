@@ -2,7 +2,7 @@
 
 WORK-IN-PROGRESS
 
-This library transforms JSON data to RDF using a [RM](http://rml.io)L mapping file. 
+This library transforms JSON data to RDF using a [RML](http://rml.io) mapping file. 
 
 1. Loads in memory the rml model
 2. Generates the subjects with defined URI templates
@@ -10,16 +10,22 @@ This library transforms JSON data to RDF using a [RM](http://rml.io)L mapping fi
 4. Generate properties
 
 
-## URI template
+## Use
 
-The URI of a resource is defined by an string with the possibility of adding data values using placeholders 
-delimited by curly brackets: {}
+This application implements the [RML](http://rml.io) specification. To learn how to create RML flies please go to the Specs section.
 
-    rr:subjectMap [
-        rr:template "http://example.com/book/{bookid}" ;
-        rr:class owl:Thing
-    ];
+
+
+## TODO
+
+
+* Add RML.joinCondition support
+* RDF.List as Data Type
+* Script Engine
+* Add generated sources to target directory
+* Add the project to maven central
     
+# Future work
 ## Using scripting templates
 
 
@@ -63,10 +69,3 @@ Ideas for templating
 //    ScriptEngine engine = manager.getEngineByName("js");
 //    Object result = engine.eval("4*5");
 
-## TODO
-
-
-* Add RML.joinCondition support
-* RDF.List as Data Type
-* Script Engine
-* Add generated sources to target directory

@@ -18,6 +18,8 @@ import static org.junit.Assert.assertTrue;
 @Slf4j
 public class ProcessorTest {
 
+    private  ClassLoader classLoader = this.getClass().getClassLoader();
+
     @Test
     public void storeTest() throws Exception {
 
@@ -26,7 +28,9 @@ public class ProcessorTest {
         Model rmlModel = ModelFactory.createDefaultModel();
         rmlModel.read(in, null, "TTL");
         Processor processor = new Processor(rmlModel);
-        String jsonString = new String(Files.readAllBytes(Paths.get("src", "test", "resources", "store.json")));
+
+        String file = classLoader.getResource("store.json").getFile().toString();
+        String jsonString = new String(Files.readAllBytes(Paths.get(file)));
 
         Model model = processor.process(jsonString);
 
@@ -49,7 +53,9 @@ public class ProcessorTest {
         Model rmlModel = ModelFactory.createDefaultModel();
         rmlModel.read(in, null, "TTL");
         Processor processor = new Processor(rmlModel);
-        String jsonString = new String(Files.readAllBytes(Paths.get("src", "test", "resources", "museum.json")));
+
+        String file = classLoader.getResource("museum.json").getFile().toString();
+        String jsonString = new String(Files.readAllBytes(Paths.get(file)));
 
         Model model = processor.process(jsonString);
 
@@ -62,26 +68,6 @@ public class ProcessorTest {
 
     }
 
-    @Test
-    public void venueTest() throws Exception {
-
-        InputStream in = get().open("venue.rml");
-
-        Model rmlModel = ModelFactory.createDefaultModel();
-        rmlModel.read(in, null, "TTL");
-        Processor processor = new Processor(rmlModel);
-        String jsonString = new String(Files.readAllBytes(Paths.get("src", "test", "resources", "venue.json")));
-
-        Model model = processor.process(jsonString);
-
-        StmtIterator  stmtIterator = model.listStatements();
-        while (stmtIterator.hasNext()){
-            Statement statement = stmtIterator.nextStatement();
-            log.debug(statement.toString());
-        }
-
-
-    }
 
     @Test
     public void scriptEngineTests() throws ScriptException, NoSuchMethodException {
