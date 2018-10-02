@@ -1,4 +1,5 @@
 # JSON to RDF
+[![Build Status](https://travis-ci.com/alegrm/json2rdf.svg?branch=master)](https://travis-ci.com/alegrm/json2rdf)
 
 WORK-IN-PROGRESS
 
