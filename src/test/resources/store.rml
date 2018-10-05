@@ -134,6 +134,12 @@
        rr:datatype xsd:string
     ];
   ];
+  rr:predicateObjectMap [
+    rr:predicate schema:category;
+    rr:objectMap [
+      rr:template "http://data.example.com/category/{category}"
+    ];
+  ];
 #  rr:predicateObjectMap [
 #      rr:predicate schema:chapter;
 #      rr:objectMap [

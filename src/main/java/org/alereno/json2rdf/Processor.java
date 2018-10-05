@@ -60,9 +60,10 @@ public class Processor {
 
             // Generate Subject Map
             try {
-                String uriString = generateUriFormTemplate(triplesMap.getSubjectMap().getRrTemplate(), element, document);
 
+                String uriString = generateUriFormTemplate(triplesMap.getSubjectMap().getRrTemplate(), element, document);
                 Resource subject = model.getResource(uriString);
+
                 if (model.containsResource(subject)) {
                     log.info("{} was already created...", subject.getURI());
                     subjectsCreated.add(subject);
@@ -91,9 +92,15 @@ public class Processor {
                                 model.add(subject, property, rdfNode);
                                 break;
                             case OBJECT_TYPE:
-                                List<Resource> objects = generateTriples(objectMap.getParentTriplesMap(), ctx, document, model);
-                                // TODO: should I have here a RDFList instead of several triples??!!
-                                objects.stream().forEach(object -> model.add(subject, property, object));
+                                if (objectMap.getParentTriplesMap()!= null) {
+                                    List<Resource> objects = generateTriples(objectMap.getParentTriplesMap(), ctx, document, model);
+                                    // TODO: should I have here a RDFList instead of several triples??!!
+                                    objects.stream().forEach(object -> model.add(subject, property, object));
+                                } else if (objectMap.getTemplate() != null){
+                                    String objectUri = generateUriFormTemplate(objectMap.getTemplate(), element, document);
+                                    Resource object = model.getResource(objectUri);
+                                    model.add(subject, property, object);
+                                }
                                 break;
                             case CONSTANT_DATA_TYPE:
                                 if (objectMap.getDataType() == null) {

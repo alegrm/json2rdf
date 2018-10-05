@@ -123,15 +123,10 @@ public class RmlModel {
                             if (constantIterator.hasNext()) {
 
                                 RDFNode object = constantIterator.nextStatement().getObject();
-                                log.debug("WHAT IS IT {} ", object);
                                 if(object.isResource())
                                     objectMap.setConstantObject(object.asResource());
-                                else {
-
+                                else
                                     objectMap.setConstantData(object.asLiteral().getString());
-                                    log.debug("isConstant {} ",objectMap.isConstant());
-
-                                }
                             }
 
                             StmtIterator parentTriplesIterator = objectMap.getResource().listProperties(R2RML.parentTriplesMap);
@@ -139,6 +134,11 @@ public class RmlModel {
                                 objectMap.setParentTriplesMapUri(parentTriplesIterator.nextStatement().getObject().asResource().getURI());
                             }
 
+                            StmtIterator templateIterator = objectMap.getResource().listProperties(R2RML.template);
+                            if (templateIterator.hasNext()) {
+                                Template template = createTemplate(templateIterator.nextStatement().getObject().asLiteral().getString());
+                                objectMap.setTemplate(template);
+                            }
 
                             StmtIterator joinConditionIterator = objectMap.getResource().listProperties(R2RML.joinCondition);
                             if (joinConditionIterator.hasNext()) {

@@ -40,16 +40,9 @@ A fat jar is packaged to be used as a java executable:
     
 ### Future work
 #### Using scripting templates
-
-Creating a new uuid
-
-    rr:subjectMap [
-        rr:template "http://example.com/book/{{uuid.generate()}}" ;
-        rr:class owl:Thing
-    ];
     
 
-Use iteration index
+Use iteration index to create consecutive URI
 
 
     rml:logicalSource [
@@ -57,8 +50,6 @@ Use iteration index
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.store.books.[*]"
       ];
-      
-   
     rr:subjectMap [
         rr:template "http://example.com/book/{{}}" ;
         rr:class kso:DnsRequest
@@ -66,7 +57,7 @@ Use iteration index
 
 
 
-Ideas for templating
+Javascript 
 
 
     rr:subjectMap [
@@ -74,10 +65,11 @@ Ideas for templating
         rr:class owl:Thing
     ];
     
-    
-//    Eval javascript inside java
-//    https://docs.oracle.com/javase/8/docs/api/javax/script/ScriptEngine.html
-//    ScriptEngineManager manager = new ScriptEngineManager();
-//    ScriptEngine engine = manager.getEngineByName("js");
-//    Object result = engine.eval("4*5");
-
+      rr:predicateObjectMap [
+        rr:predicate schema:title;
+        rr:objectMap [
+           rml:reference "title" ;
+           rr:datatype xsd:string
+           rml:script: ""
+        ];
+      ];

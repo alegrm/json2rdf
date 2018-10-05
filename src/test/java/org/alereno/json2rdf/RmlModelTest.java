@@ -130,6 +130,15 @@ public class RmlModelTest {
                                         assertTrue(booksObjectMap.getDataType() != null);
                                         assertTrue(booksObjectMap.getConstantData().equals("soldOut"));
                                         break;
+                                    case "http://schema.org/category":
+                                        booksObjectMap = booksPredicateObjectMap.getObjectMap();
+                                        assertTrue(booksObjectMap.getReference() == null);
+                                        assertTrue(booksObjectMap.isConstant() == false);
+                                        assertTrue(booksObjectMap.getObjectMapType() == ObjectMap.ObjectMapType.OBJECT_TYPE);
+                                        assertTrue(booksObjectMap.getParentTriplesMap() == null);
+                                        assertTrue(booksObjectMap.getDataType() == null);
+                                        assertTrue(booksObjectMap.getTemplate() != null);
+
                                     default:
                                         break;
 

@@ -36,9 +36,13 @@ public class ObjectMap extends Map {
                 type = ObjectMapType.CONSTANT_DATA_TYPE;
             else
                 type = ObjectMapType.CONSTANT_OBJECT_TYPE;
-
-        } else if (parentTriplesMapUri != null && reference == null && isConstant() == false)
+        }
+        else if (parentTriplesMapUri != null && reference == null && isConstant() == false)
             type = ObjectMapType.OBJECT_TYPE;
+        else if (template != null)
+            type = ObjectMapType.OBJECT_TYPE;
+        else
+            log.error("Unable to define object type {}", this);
 
         return type;
     }
